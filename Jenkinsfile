@@ -24,33 +24,34 @@ pipeline {
             }
         }
 
-        stage('Lint') {
-            steps {
-                echo 'Running Maven Checkstyle lint'
-                sh '''
-                    echo "JAVA_HOME=$JAVA_HOME"
-                    java -version
-                    mvn -version
+        stage('Lint & Build (Parallel)') {
+            parallel {
 
-                    mvn checkstyle:check > lint_report.txt 2>&1 || true
-
-                    echo "----- Lint Report -----"
-                    cat lint_report.txt
-                '''
-            }
-            post {
-                always {
-                    archiveArtifacts artifacts: 'lint_report.txt', fingerprint: true
+                stage('Lint') {
+                    steps {
+                        echo 'Running Maven Checkstyle lint'
+                        sh '''
+                            java -version
+                            mvn -version
+                            mvn checkstyle:check > lint_report.txt 2>&1 || true
+                            cat lint_report.txt
+                        '''
+                    }
+                    post {
+                        always {
+                            archiveArtifacts artifacts: 'lint_report.txt', fingerprint: true
+                        }
+                    }
                 }
-            }
-        }
 
-        stage('Build') {
-            steps {
-                echo 'Running Maven build'
-                sh '''
-                    mvn clean package -DskipTests
-                '''
+                stage('Build') {
+                    steps {
+                        echo 'Running Maven build'
+                        sh '''
+                            mvn clean package -DskipTests
+                        '''
+                    }
+                }
             }
         }
 
@@ -71,7 +72,7 @@ pipeline {
 
     post {
         success {
-            echo '✅ Build, Lint, and Tests completed successfully'
+            echo '✅ Pipeline completed successfully'
         }
         failure {
             echo '❌ Pipeline failed – check logs'
