@@ -1,11 +1,22 @@
 package com.example;
 
-public class app {
-    public static void main(String[] args) {
-        System.out.println("Hello from Maven Sample App!");
+public class App {
+
+    private App() {
+        // utility class
     }
 
-    public static int add(int a, int b) {
+    /**
+     * Main method
+     */
+    public static void main(final String[] args) {
+        System.out.println("Hello World");
+    }
+
+    /**
+     * Add two numbers
+     */
+    public static int add(final int a, final int b) {
         return a + b;
     }
 }
