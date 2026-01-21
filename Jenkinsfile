@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        GIT_REPO   = 'https://gitlab.com/sandeep160/pipeline-e2e.git'
+        GIT_REPO   = 'https://github.com/vishnukumar-vv/p2p-maven.git'
         BRANCH     = 'main'
         MAVEN_HOME = tool 'Maven3'
         JAVA_HOME  = tool 'openjdk21'
@@ -19,7 +19,7 @@ pipeline {
             steps {
                 git branch: BRANCH,
                     url: GIT_REPO,
-                    credentialsId: '246e4390-6513-40d3-9379-a13be88e6658'
+                    credentialsId: 'gitHub_id'
             }
         }
 
