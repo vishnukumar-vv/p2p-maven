@@ -1,10 +1,10 @@
 pipeline {
     agent { label 'linuxgit' }
 
-    options {
-        timestamps()
-        skipDefaultCheckout(true)
-    }
+    //options {
+        //timestamps()
+       // skipDefaultCheckout(true)
+    //}
 
     environment {
         GIT_REPO   = 'https://github.com/vishnukumar-vv/p2p-maven.git'
